@@ -22,4 +22,16 @@
           <span *ngIf="article.author != null">Author(s): {{article.author}}</span>
     </div>
   </div>
+
+  <div *ngIf="loader" style="text-align: center;">
+    <div style="margin:5px" class="spinner-grow" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div style="margin:5px" class="spinner-grow" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>  
+    <div style="margin:5px" class="spinner-grow" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>  
+  </div>
 </div>

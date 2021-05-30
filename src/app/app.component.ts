@@ -8,12 +8,12 @@ import { NewsApiService } from "./services/news-api.service";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-  title = "CodeSandbox";
-  apiKey = "23a1dc1a155f45fab50d958ef5930628";
+  apiKey: string = "23a1dc1a155f45fab50d958ef5930628";
   mArticles: Array<any>;
-  page = 1;
-  countryCode="";
-  searchKeyword="";
+  page: number = 1;
+  countryCode: string="";
+  searchKeyword: string="";
+  public loader: boolean = false;
   mArticlesTest: Array<any> = [
     {
         "source": {
@@ -158,15 +158,16 @@ export class AppComponent implements OnInit {
       this.countryCode = event.target.id;
     this._newsapiService.getArticles(event.target.id, this.page).subscribe((data) => {
       this.mArticles = data["articles"];
-      console.log(this.mArticles);
     });
   }
 
   onScroll(): void {
+      this.loader = true;
     this._newsapiService
       .getArticles(this.countryCode,++this.page)
       .subscribe((data) => {
         this.mArticles.push(...data["articles"]);
+        this.loader = false;
       });
   }
 
@@ -187,7 +188,6 @@ export class AppComponent implements OnInit {
       this.page = 1;
     this._newsapiService.getArticles(this.countryCode, this.page).subscribe((data) => {
         this.mArticles = data["articles"];
-        console.log(this.mArticles);
       });
   }
 }

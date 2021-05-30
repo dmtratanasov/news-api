@@ -11,6 +11,8 @@ export class AppComponent implements OnInit {
   title = "CodeSandbox";
   apiKey = "23a1dc1a155f45fab50d958ef5930628";
   mArticles: Array<any>;
+  page = 1;
+  countryCode="";
   mArticlesTest: Array<any> = [
     {
         "source": {
@@ -143,23 +145,36 @@ export class AppComponent implements OnInit {
         "content": "Great news for typo-prone tweeters: Twitter Blue, a $2.99 monthly subscription, appears to be coming soon to a Timeline near you.\r\nTwo weeks ago, researcher Jane Manchun Wong first reported that Twit… [+2076 chars]"
     }
 ]
-  httpOptions = {
-    headers: new HttpHeaders({
-      "Content-Type": "application/json"
-    })
-  };
+  constructor(private _newsapiService: NewsApiService) {}
+
 
   openArticleUrl(articleUrl: string){
       window.open(articleUrl, "_blank")
   }
 
-  printResult() {
-    this.newsapi.initArticles().subscribe((data) => {
+  getArticles(event: any) {
+      this.page = 1;
+      this.countryCode = event.target.id;
+    this._newsapiService.getArticles(event.target.id, this.page).subscribe((data) => {
       this.mArticles = data["articles"];
       console.log(this.mArticles);
     });
   }
-  constructor(private newsapi: NewsApiService) {}
 
-  ngOnInit() {}
+  onScroll(): void {
+    this._newsapiService
+      .getArticles(this.countryCode,++this.page)
+      .subscribe((data) => {
+        this.mArticles.push(...data["articles"]);
+      });
+  }
+
+  ngOnInit() {
+      this.countryCode = "us";
+      this.page = 1;
+    this._newsapiService.getArticles(this.countryCode, this.page).subscribe((data) => {
+        this.mArticles = data["articles"];
+        console.log(this.mArticles);
+      });
+  }
 }

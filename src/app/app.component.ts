@@ -171,9 +171,15 @@ export class AppComponent implements OnInit {
   }
 
   searchArticles(keyword: string){
-    this._newsapiService.searchArticles(keyword).subscribe((data) => {
-        this.mArticles = data["articles"];
-      });
+      if(keyword != ""){
+          this._newsapiService.searchArticles(keyword).subscribe((data) => {
+              this.mArticles = data["articles"];
+            });
+      }
+      else{
+          console.log("no search keyword provided");
+      }
+      
   }
 
   ngOnInit() {

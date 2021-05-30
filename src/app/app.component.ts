@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   mArticles: Array<any>;
   page = 1;
   countryCode="";
+  searchKeyword="";
   mArticlesTest: Array<any> = [
     {
         "source": {
@@ -166,6 +167,12 @@ export class AppComponent implements OnInit {
       .getArticles(this.countryCode,++this.page)
       .subscribe((data) => {
         this.mArticles.push(...data["articles"]);
+      });
+  }
+
+  searchArticles(keyword: string){
+    this._newsapiService.searchArticles(keyword).subscribe((data) => {
+        this.mArticles = data["articles"];
       });
   }
 

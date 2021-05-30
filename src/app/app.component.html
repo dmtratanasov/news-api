@@ -4,18 +4,22 @@
   [infiniteScrollThrottle]="500"
   (scrolled)="onScroll()"
 >
+<div style="margin:10px 0">
   <span id="us" (click)="getArticles($event)" style="margin: 5px; cursor: pointer; text-decoration: underline; color: blue;">United States news</span>
   <span id="gb" (click)="getArticles($event)" style="margin: 5px; cursor: pointer; text-decoration: underline; color: blue;">Great Britain news</span>
   <span id="nl" (click)="getArticles($event)" style="margin: 5px; cursor: pointer; text-decoration: underline; color: blue;">Netherlands news</span>
-  <div style="display: grid;
+  <input [(ngModel)]="searchKeyword" type="text">
+  <button (click)="searchArticles(searchKeyword)">Search Articles</button>
+</div> 
+ <div style="display: grid;
               grid-gap: 10px;
               grid-template-columns: repeat(3, 1fr);">
-    <div style=" border: 1px solid lightgray; padding:15px" (click)="openArticleUrl(article.url)" routerLinkActive="router-link-active"  routerLinkActive="router-link-active"  *ngFor="let article of mArticles">
-      <div style="width: 100%;">
-        <h3>{{article.title}}</h3>
-        <h5>{{article.content}}</h5>
-        <span *ngIf="article.author != null">Author(s): {{article.author}}</span>
-      </div>
+    <div style=" border: 1px solid lightgray; padding:15px; cursor: pointer;" 
+    (click)="openArticleUrl(article.url)" 
+      *ngFor="let article of mArticles">
+          <h3>{{article.title}}</h3>
+          <h5>{{article.content}}</h5>
+          <span *ngIf="article.author != null">Author(s): {{article.author}}</span>
     </div>
   </div>
 </div>

@@ -17,6 +17,13 @@ export class NewsApiService {
     );
   }
 
+  searchArticles(keyword:string) {
+    return this.http.get(
+      `https://newsapi.org/v2/top-headlines?q=${keyword}&language=en&apiKey=` +
+        this.api_key
+    );
+  }
+
 
 
 
